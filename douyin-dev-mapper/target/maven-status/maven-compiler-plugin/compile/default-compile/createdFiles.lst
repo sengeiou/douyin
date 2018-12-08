@@ -1,0 +1,8 @@
+com\douyin\mapper\CommentsMapper.class
+com\douyin\mapper\BGMMapper.class
+com\douyin\mapper\VideoMapper.class
+com\douyin\mapper\SearchRecordsMapper.class
+com\douyin\mapper\UsersFansMapper.class
+com\douyin\mapper\UsersReportMapper.class
+com\douyin\mapper\UsersLikeVideosMapper.class
+com\douyin\mapper\UserMapper.class
