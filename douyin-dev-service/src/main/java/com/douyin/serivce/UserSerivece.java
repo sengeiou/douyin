@@ -19,4 +19,11 @@ public interface UserSerivece {
      * @param user
      */
     public void saveUser(User user);
+
+    /**
+     * 根据用户名称查找用户
+     * @param name
+     * @return
+     */
+    public User queryUserForLogin(String name, String password);
 }

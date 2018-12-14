@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserSerivece {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUsernameEqualTo(name);
         List<User> users = userMapper.selectByExample(userExample);
-        if(CollectionUtils.isEmpty(users)){
+        if (CollectionUtils.isEmpty(users)) {
             return false;
         }
         return true;
@@ -39,8 +39,22 @@ public class UserServiceImpl implements UserSerivece {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void saveUser(User user) {
-            String userId = sid.nextShort();
-            user.setId(userId);
-            userMapper.insert(user);
+        String userId = sid.nextShort();
+        user.setId(userId);
+        userMapper.insert(user);
     }
+
+    @Override
+    public User queryUserForLogin(String name,String password) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUsernameEqualTo(name);
+        userExample.createCriteria().andPasswordEqualTo(password);
+        List<User> users = userMapper.selectByExample(userExample);
+        if (CollectionUtils.isEmpty(users)) {
+            return null;
+        }
+        return users.get(0);
+    }
+
+
 }
