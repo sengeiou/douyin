@@ -78,7 +78,7 @@ public class RegisteredAndLoginController extends BasicController{
 
     public UserVO setUserRedisSessionToken(User user){
         UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(userranc,userVO);
+        BeanUtils.copyProperties(user,userVO);
         String token = UUID.randomUUID().toString();
         userVO.setUserToken(token);
         //设置redis中的session过期时间
