@@ -29,4 +29,10 @@ public class BgmServiceImpl implements BgmService {
         List<BGM> allBgm = bgmMapper.selectByExample(example);
         return allBgm;
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public BGM queryBGMById(String bgmId) {
+        return bgmMapper.selectByPrimaryKey(bgmId);
+    }
 }

@@ -1,12 +1,9 @@
 package com.douyin.controller;
 
-import com.douyin.Statis;
-import com.douyin.pojo.HostHolder;
+import com.douyin.PathManager;
 import com.douyin.pojo.User;
 import com.douyin.serivce.UserSerivece;
 import com.douyin.utils.IDouyinJSONResult;
-import com.douyin.utils.KeyUtils;
-import com.douyin.utils.MD5Utils;
 import com.douyin.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -21,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.UUID;
 
 /**
  * @author manchaoyang
@@ -53,8 +49,7 @@ public class UserController extends BasicController {
         try {
             fileName = files[0].getOriginalFilename();
             if (StringUtils.isNoneBlank(fileName)) {
-                String finalFacePath = Statis.getFaceFilePath(userId, fileName);
-                System.out.println(finalFacePath);
+                String finalFacePath = PathManager.getFaceFilePath(userId, fileName);
                 File outFile = new File(finalFacePath);
                 if (outFile.getParentFile() != null || !outFile.getParentFile().isDirectory()) {
                     //create parent folder
@@ -77,9 +72,9 @@ public class UserController extends BasicController {
 
         User user = new User();
         user.setId(userId);
-        user.setFaceImage(Statis.getFaceFilePathDB(userId, fileName));
+        user.setFaceImage(PathManager.getFaceFilePathDB(userId, fileName));
         userSerivece.updateUserInfo(user);
-        return IDouyinJSONResult.ok(Statis.getFaceFilePathDB(userId, fileName));
+        return IDouyinJSONResult.ok(PathManager.getFaceFilePathDB(userId, fileName));
     }
 
 
