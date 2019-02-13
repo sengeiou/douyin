@@ -1,2 +1,9 @@
-com\douyin\controller\RegistLoginController.class
+com\douyin\Statis.class
+com\douyin\controller\RegisteredAndLoginController.class
+com\douyin\controller\interceptor\LoginInterceptor.class
 com\Application.class
+com\douyin\controller\interceptor\MiniInterceptor.class
+com\WebMvcConfig.class
+com\Swagger2.class
+com\douyin\controller\BasicController.class
+com\douyin\controller\UserController.class

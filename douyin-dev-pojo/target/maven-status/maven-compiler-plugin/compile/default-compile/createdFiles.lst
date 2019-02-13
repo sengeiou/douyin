@@ -5,9 +5,11 @@ com\douyin\pojo\UserExample$Criteria.class
 com\douyin\pojo\UsersFansExample$Criteria.class
 com\douyin\pojo\User.class
 com\douyin\pojo\UserExample$GeneratedCriteria.class
+com\douyin\vo\UserVO.class
 com\douyin\pojo\SearchRecordsExample.class
 com\douyin\pojo\UsersReportExample$Criterion.class
 com\douyin\pojo\CommentsExample$GeneratedCriteria.class
+com\douyin\pojo\HostHolder.class
 com\douyin\pojo\UsersReportExample.class
 com\douyin\pojo\SearchRecordsExample$GeneratedCriteria.class
 com\douyin\pojo\UsersLikeVideosExample.class

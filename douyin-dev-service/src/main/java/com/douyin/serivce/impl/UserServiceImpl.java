@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserSerivece {
         userMapper.insert(user);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public User queryUserForLogin(String name,String password) {
         UserExample userExample = new UserExample();
@@ -54,6 +55,26 @@ public class UserServiceImpl implements UserSerivece {
             return null;
         }
         return users.get(0);
+    }
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateUserInfo(User user) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIdEqualTo(user.getId());
+        userMapper.updateByExampleSelective(user,userExample);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public User queryUserInfo(String userId) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIdEqualTo(userId);
+        User user = userMapper.selectByPrimaryKey(userId);
+        return user;
     }
 
 

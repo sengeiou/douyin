@@ -1,6 +1,9 @@
-F:\Project\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\interceptor\MiniInterceptor.java
-F:\Project\douyin\douyin-dev-mini-api\src\main\java\com\Swagger2.java
-F:\Project\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\RegistLoginController.java
-F:\Project\douyin\douyin-dev-mini-api\src\main\java\com\Application.java
-F:\Project\douyin\douyin-dev-mini-api\src\main\java\com\ServletContextConfig.java
-F:\Project\douyin\douyin-dev-mini-api\src\main\java\com\WebMvcConfig.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\Application.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\BasicController.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\UserController.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\douyin\Statis.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\interceptor\MiniInterceptor.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\RegisteredAndLoginController.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\douyin\controller\interceptor\LoginInterceptor.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\WebMvcConfig.java
+H:\workspace\workspace_background\douyin\douyin-dev-mini-api\src\main\java\com\Swagger2.java

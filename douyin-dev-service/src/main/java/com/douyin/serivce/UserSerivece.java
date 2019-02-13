@@ -26,4 +26,8 @@ public interface UserSerivece {
      * @return
      */
     public User queryUserForLogin(String name, String password);
+
+    public void updateUserInfo(User user);
+
+    public User queryUserInfo(String userId);
 }

@@ -3,6 +3,7 @@ org\n3r\idworker\strategy\DefaultRandomCodeStrategy.class
 org\n3r\idworker\utils\HttpReq.class
 org\n3r\idworker\Code.class
 org\n3r\idworker\strategy\FileLock.class
+com\douyin\utils\RedisOperator.class
 org\n3r\idworker\Test.class
 org\n3r\idworker\Sid$1.class
 org\n3r\idworker\utils\Props.class
@@ -26,3 +27,4 @@ org\n3r\idworker\InvalidSystemClock.class
 org\n3r\idworker\utils\Ip.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy$2.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy.class
+com\douyin\utils\KeyUtils.class
