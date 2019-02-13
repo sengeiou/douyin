@@ -23,8 +23,13 @@ public class PathManager {
         return "/" + userId + FACE_PATH + fileName;
     }
 
-    public static String getMp3Path(String partPath){
-        return FILE_PATH_PRE+partPath;
+    public static String getMp3Path(String partPath) {
+        return FILE_PATH_PRE  + partPath;
+    }
+
+
+    public static String getVideoFilePathDB(String userId, String fileName) {
+        return "/" + userId + VIDEO_PATH + fileName;
     }
 
 }
