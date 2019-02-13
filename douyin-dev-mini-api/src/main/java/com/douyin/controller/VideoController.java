@@ -6,7 +6,7 @@ import com.douyin.pojo.BGM;
 import com.douyin.pojo.Video;
 import com.douyin.serivce.BgmService;
 import com.douyin.utils.IDouyinJSONResult;
-import com.douyin.utils.MergeVideoMp3Utils;
+import com.douyin.utils.*;
 import io.swagger.annotations.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +30,9 @@ public class VideoController extends BasicController {
 
     @Autowired
     private MergeVideoMp3Utils mergeVideoMp3Utils;
+
+    @Autowired
+    private FileSaveUtils fileSaveUtils;
 
     @ApiOperation(value = "上传视频", notes = "上传视频的接口")
     @ApiImplicitParams({
@@ -56,14 +59,12 @@ public class VideoController extends BasicController {
         if (StringUtils.isBlank(userId)) {
             return IDouyinJSONResult.errorMsg("用户为空");
         }
-        FileOutputStream fileOutput = null;
-        InputStream inputStream = null;
         String fileName = null;
         try {
             fileName = file.getOriginalFilename();
             if (StringUtils.isNoneBlank(fileName)) {
                 String finalVideoPath = PathManager.getVideoFilePath(userId, fileName);
-                saveFile(finalVideoPath,file.getInputStream());
+                fileSaveUtils.saveFile(file.getInputStream(),finalVideoPath);
             }else{
                 return IDouyinJSONResult.errorMsg("文件名为空");
             }
@@ -74,11 +75,6 @@ public class VideoController extends BasicController {
         } catch (Exception e) {
             e.printStackTrace();
             return IDouyinJSONResult.errorMsg("上传出错");
-        } finally {
-            if (fileOutput != null) {
-                fileOutput.flush();
-                fileOutput.close();
-            }
         }
         Video video = new Video();
         video.setAudioId(bgmId);
@@ -90,11 +86,6 @@ public class VideoController extends BasicController {
 //        video.setVideoPath();
 //        video.setCoverPath();
         return IDouyinJSONResult.ok(PathManager.getFaceFilePathDB(userId, fileName));
-    }
-
-    public static void main(String[] args){
-        File file = new File("G:/abbb/ccc");
-        file.mkdir();
     }
 
 }

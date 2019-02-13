@@ -22,26 +22,5 @@ public class BasicController {
     }
 
 
-    /**
-     * 存储给定的文件流
-     * @param finalFilePath
-     * @param inputStream
-     */
-    public static void saveFile(String finalFilePath, InputStream inputStream){
-        try{
-        File outFile = new File(finalFilePath);
-        //确保文件的父层级是个目录
-        if (outFile.getParentFile() != null || !outFile.getParentFile().isDirectory()) {
-            outFile.getParentFile().mkdirs();
-        }
-        FileOutputStream fileOutput = new FileOutputStream(outFile);
-        IOUtils.copy(inputStream, fileOutput);
-       } catch (FileNotFoundException e) {
-            //todo logger
-            e.printStackTrace();
-        } catch (IOException e) {
-            //todo logger
-            e.printStackTrace();
-        }
-    }
+
 }
