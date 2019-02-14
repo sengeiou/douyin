@@ -41,6 +41,9 @@ public class VideoController extends BasicController {
     @Autowired
     private VideoService videoService;
 
+    @Autowired
+    private FetchVideoCover fetchVideoCover;
+
     @ApiOperation(value = "上传视频", notes = "上传视频的接口")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", required = true,
@@ -67,14 +70,21 @@ public class VideoController extends BasicController {
             return IDouyinJSONResult.errorMsg("用户为空");
         }
         String fileName = null;
-        String dbPath = "";
+        String videoPathDB = "";
         String finalVideoPath = "";
+        String coverPathDB = "";
+        String finalCoverPath = "";
         try {
             fileName = file.getOriginalFilename();
             if (StringUtils.isNoneBlank(fileName)) {
-                dbPath = PathManager.getVideoFilePathDB(userId,fileName);
+                videoPathDB = PathManager.getVideoFilePathDB(userId,fileName);
                 finalVideoPath = PathManager.getVideoFilePath(userId, fileName);
+                String coverName = UUID.randomUUID().toString()+".jpg";
+                finalCoverPath = PathManager.getCoverPath(userId,coverName);
+                coverPathDB = PathManager.getCoverPathDB(userId,coverName);
                 fileSaveUtils.saveFile(file.getInputStream(),finalVideoPath);
+                fetchVideoCover.fetchCover(finalVideoPath,finalCoverPath);
+
             }else{
                 return IDouyinJSONResult.errorMsg("文件名为空");
             }
@@ -82,7 +92,7 @@ public class VideoController extends BasicController {
                 BGM bgm = bgmService.queryBGMById(bgmId);
                 String mp3InputPath = PathManager.getMp3Path(bgm.getPath());
                 String videoOutputName = UUID.randomUUID().toString()+".mp4";
-                dbPath = PathManager.getVideoFilePathDB(userId,videoOutputName);
+                videoPathDB = PathManager.getVideoFilePathDB(userId,videoOutputName);
                 mergeVideoMp3Utils.convertor(finalVideoPath,mp3InputPath,videoSeconds,PathManager.getVideoFilePath(userId, videoOutputName));
             }
         } catch (Exception e) {
@@ -96,12 +106,47 @@ public class VideoController extends BasicController {
         video.setVideoDesc(desc);
         video.setVideoHeight(videoHeight);
         video.setVideoWidth(videoWidth);
-        video.setVideoPath(dbPath);
+        video.setVideoPath(videoPathDB);
         video.setStatus(VideoStatusEnum.SUCCESS.value);
         video.setCreateTime(new Date());
         String videoId = videoService.saveVideo(video);
-//        video.setCoverPath();
+        video.setCoverPath(coverPathDB);
+        return IDouyinJSONResult.ok(videoId);
+    }
 
+
+    @ApiOperation(value = "上传封面", notes = "上传封面的接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true,
+            dataType = "String", paramType = "form"),
+            @ApiImplicitParam(name = "videoId", value = "视频id", required = true,
+                    dataType = "String", paramType = "form")
+    })
+    @PostMapping(value = "/uploadCover", headers = "content-type=multipart/form-data")
+    public IDouyinJSONResult uploadCover(String userId,
+                                         String videoId,
+                                         @ApiParam(value = "封面", required = true)
+                                            MultipartFile file) throws Exception {
+        if (StringUtils.isBlank(videoId)) {
+            return IDouyinJSONResult.errorMsg("视频主键为空");
+        }
+        String fileName = null;
+        String dbCoverPath = "";
+        String finalCoverPath = "";
+        try {
+            fileName = file.getOriginalFilename();
+            if (StringUtils.isNoneBlank(fileName)) {
+                dbCoverPath = PathManager.getCoverPathDB(userId,fileName);
+                finalCoverPath = PathManager.getCoverPath(userId, fileName);
+                fileSaveUtils.saveFile(file.getInputStream(),finalCoverPath);
+            }else{
+                return IDouyinJSONResult.errorMsg("封面名为空");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return IDouyinJSONResult.errorMsg("上传出错");
+        }
+        videoService.updateVideoCover(videoId,dbCoverPath);
         return IDouyinJSONResult.ok(videoId);
     }
 
