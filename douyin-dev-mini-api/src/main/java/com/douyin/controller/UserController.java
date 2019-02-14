@@ -3,6 +3,7 @@ package com.douyin.controller;
 import com.douyin.PathManager;
 import com.douyin.pojo.User;
 import com.douyin.serivce.UserSerivece;
+import com.douyin.utils.FileSaveUtils;
 import com.douyin.utils.IDouyinJSONResult;
 import com.douyin.vo.UserVO;
 import io.swagger.annotations.Api;
@@ -29,6 +30,10 @@ public class UserController extends BasicController {
     @Autowired
     private UserSerivece userSerivece;
 
+
+    @Autowired
+    private FileSaveUtils fileSaveUtils;
+
     @ApiOperation(value = "用户头像上传", notes = "用户头像上传的接口")
     @PostMapping(value = "/uploadFace")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true,
@@ -42,34 +47,17 @@ public class UserController extends BasicController {
             return IDouyinJSONResult.errorMsg("文夹为空");
         }
 
-        FileOutputStream fileOutput = null;
-
-        InputStream inputStream = null;
         String fileName = null;
         try {
             fileName = files[0].getOriginalFilename();
             if (StringUtils.isNoneBlank(fileName)) {
                 String finalFacePath = PathManager.getFaceFilePath(userId, fileName);
-                File outFile = new File(finalFacePath);
-                if (outFile.getParentFile() != null || !outFile.getParentFile().isDirectory()) {
-                    //create parent folder
-                    outFile.getParentFile().mkdirs();
-                }
-                fileOutput = new FileOutputStream(outFile);
-                inputStream = files[0].getInputStream();
-                IOUtils.copy(inputStream, fileOutput);
+                fileSaveUtils.saveFile(files[0].getInputStream(),finalFacePath);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return IDouyinJSONResult.errorMsg("上传出错");
-        } finally {
-            if (fileOutput != null) {
-                fileOutput.flush();
-                fileOutput.close();
-            }
         }
-
         User user = new User();
         user.setId(userId);
         user.setFaceImage(PathManager.getFaceFilePathDB(userId, fileName));
