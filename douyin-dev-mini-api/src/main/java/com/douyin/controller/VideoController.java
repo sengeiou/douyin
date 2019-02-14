@@ -109,8 +109,8 @@ public class VideoController extends BasicController {
         video.setVideoPath(videoPathDB);
         video.setStatus(VideoStatusEnum.SUCCESS.value);
         video.setCreateTime(new Date());
-        String videoId = videoService.saveVideo(video);
         video.setCoverPath(coverPathDB);
+        String videoId = videoService.saveVideo(video);
         return IDouyinJSONResult.ok(videoId);
     }
 
